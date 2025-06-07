@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yml
+
+images:
+  - name: 576607007321.dkr.ecr.us-east-1.amazonaws.com/gitops-gp-ecr:1.0
+    newTag: latest
