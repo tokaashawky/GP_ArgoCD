@@ -5,5 +5,5 @@ resources:
   - deployment.yml
 
 images:
-  - name: 576607007321.dkr.ecr.us-east-1.amazonaws.com/gitops-gp-ecr:1.1
-    newTag: "1.1"
+  - name: 576607007321.dkr.ecr.us-east-1.amazonaws.com/gitops-gp-ecr
+    newTag: ""

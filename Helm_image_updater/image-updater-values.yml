@@ -8,11 +8,10 @@ config:
       ping: yes
       default: true
       insecure: false
-      images:
   images:
     - name: 576607007321.dkr.ecr.us-east-1.amazonaws.com/gitops-gp-ecr
       alias: nodeapp
-  
+
   logLevel: "info"
 
   git:
@@ -20,13 +19,13 @@ config:
     gitUser: "Toka_Argo_Image_Updater"
     gitEmail: "tokaelmaadawy@gmail.com"
     credentials:
-    - url: https://github.com/tokaashawky
-      usernameSecret:
-        name: argocd-image-updater-creds
-        key: username
-      passwordSecret:
-        name: argocd-image-updater-creds
-        key: password
+      - url: https://github.com/tokaashawky
+        usernameSecret:
+          name: argocd-image-updater-creds
+          key: username
+        passwordSecret:
+          name: argocd-image-updater-creds
+          key: password
 
 authScripts: 
   enabled: true
