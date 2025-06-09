@@ -20,7 +20,7 @@ spec:
             - containerPort: 3000
           env:
             - name: MYSQL_HOST
-              value: mysql-release.mysql.svc.cluster.local
+              value: mysql-release.app.svc.cluster.local
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
