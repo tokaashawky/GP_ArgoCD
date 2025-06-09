@@ -15,6 +15,45 @@ spec:
     spec:
       containers:
         - name: nodejs-app
-          image: 576607007321.dkr.ecr.us-east-1.amazonaws.com/gitops-gp-ecr:1.1
+          image: 576607007321.dkr.ecr.us-east-1.amazonaws.com/gitops-gp-ecr:1
           ports:
             - containerPort: 3000
+          env:
+            - name: MYSQL_HOST
+              value: mysql-release.mysql.svc.cluster.local
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-mysql-secrets
+                  key: mysql-username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-mysql-secrets
+                  key: mysql-password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-mysql-secrets
+                  key: mysql-database
+            - name: REDIS_HOST
+              value: redis-release-master.app.svc.cluster.local
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-redis-secrets
+                  key: redis-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-app-service
+  namespace: app
+spec:
+  selector:
+    app: nodejs-app
+  type: LoadBalancer      
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
