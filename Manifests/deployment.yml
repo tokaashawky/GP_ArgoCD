@@ -4,7 +4,7 @@ metadata:
   name: nodejs-app
   namespace: app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nodejs-app
@@ -19,41 +19,25 @@ spec:
           ports:
             - containerPort: 3000
           env:
+            - name: PORT
+              value: "3000"
+
             - name: MYSQL_HOST
               value: mysql-release.app.svc.cluster.local
             - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: app-mysql-secrets
-                  key: mysql-username
+              value: myuser
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: app-mysql-secrets
+                  name: mysql-release
                   key: mysql-password
             - name: MYSQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: app-mysql-secrets
-                  key: mysql-database
+              value: mydatabase
+
             - name: REDIS_HOST
               value: redis-release-master.app.svc.cluster.local
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: app-redis-secrets
+                  name: redis-release
                   key: redis-password
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nodejs-app-service
-  namespace: app
-spec:
-  selector:
-    app: nodejs-app
-  type: LoadBalancer      
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 3000
