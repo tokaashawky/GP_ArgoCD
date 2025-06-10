@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nodejs-app
-          image: 576607007321.dkr.ecr.us-east-1.amazonaws.com/gitops-gp-ecr:nodejsapp-9
+          image: 576607007321.dkr.ecr.us-east-1.amazonaws.com/gitops-gp-ecr:1.2
           ports:
             - containerPort: 3000
           env:

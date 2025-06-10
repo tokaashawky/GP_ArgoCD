@@ -1,0 +1,32 @@
+config:
+  registries:
+    - name: AmazonECR
+      api_url: https://576607007321.dkr.ecr.us-east-1.amazonaws.com
+      prefix: 576607007321.dkr.ecr.us-east-1.amazonaws.com
+      ping: yes
+      default: true
+      insecure: false
+      credentials: ext:/scripts/ecr-login.sh
+      credsexpire: 1h
+  git:
+    user: "argocd-image-updater"
+    email: "tokaelmaadawy@gmail.com"
+
+authScripts:
+  enabled: true
+  scripts:
+    ecr-login.sh: |
+      #!/bin/sh
+      export HOME=/tmp
+      aws ecr --region "us-east-1" get-authorization-token --output text --query 'authorizationData[].authorizationToken' | base64 -d     
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: false
+  name: image-updater-sa
+
+
+
+
