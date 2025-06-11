@@ -24,7 +24,7 @@ spec:
               value: "3000"
 
             - name: MYSQL_HOST
-              value: mysql-release.app.svc.cluster.local
+              value: mysql.app.svc.cluster.local
 
             - name: MYSQL_USER
               valueFrom:
