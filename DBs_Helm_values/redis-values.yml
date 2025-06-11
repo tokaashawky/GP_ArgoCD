@@ -1,0 +1,10 @@
+auth:
+  enabled: true
+  existingSecret: redis-secret
+  existingSecretPasswordKey: password
+master:
+  persistence:
+    enabled: true
+replica:
+  persistence:
+    enabled: true

@@ -7,10 +7,18 @@ config:
       default: true
       insecure: false
       credentials: ext:/scripts/ecr-login.sh
-      credsexpire: 1h
+      credsexpire: 12h
   git:
     user: "argocd-image-updater"
     email: "tokaelmaadawy@gmail.com"
+    credentials:
+      - url: "https://github.com/tokaashawky/GP_ArgoCD.git"
+        usernameSecret:
+          name: git-creds
+          key: username
+        passwordSecret:
+          name: git-creds
+          key: password
 
 authScripts:
   enabled: true
@@ -18,15 +26,17 @@ authScripts:
     ecr-login.sh: |
       #!/bin/sh
       export HOME=/tmp
-      aws ecr --region "us-east-1" get-authorization-token --output text --query 'authorizationData[].authorizationToken' | base64 -d     
-
+      aws ecr get-authorization-token \
+        --region us-east-1 \
+        --output text \
+        --query 'authorizationData[].authorizationToken' | base64 -d
 rbac:
   create: true
 
 serviceAccount:
-  create: false
+  create: true
   name: image-updater-sa
-
-
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::576607007321:role/ImageUpdaterAccessRole
 
 
